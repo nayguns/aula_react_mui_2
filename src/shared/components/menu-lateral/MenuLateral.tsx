@@ -1,5 +1,6 @@
-import { Avatar, Box, Divider, Drawer, Icon, List, ListItemButton, ListItemIcon, ListItemText, useTheme } from "@mui/material"
+import { Avatar, Box, Divider, Drawer, Icon, List, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from "@mui/material"
 import React from "react";
+import { useDrawerContext } from "../../contexts";
 
 type Props = {
     children?: React.ReactNode;
@@ -7,10 +8,13 @@ type Props = {
 
 export const MenuLateral: React.FC<Props> = ({ children }) => {
     const theme = useTheme();
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext();
 
     return(
         <>
-            <Drawer variant='permanent'>
+            <Drawer open={isDrawerOpen} variant={smDown ? 'temporary' : 'permanent'} onClose={toggleDrawerOpen}>
                 <Box width={theme.spacing(28)} height="100%" display="flex" flexDirection="column">
                     
                     <Box 
@@ -39,7 +43,7 @@ export const MenuLateral: React.FC<Props> = ({ children }) => {
                 </Box>
             </Drawer>
 
-            <Box height="100vh" marginLeft={theme.spacing(28)}>
+            <Box height="100vh" marginLeft={smDown ? 0 : theme.spacing(28)}>
                 {children}
             </Box>
         </>
