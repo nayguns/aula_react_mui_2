@@ -2,9 +2,20 @@ import { Button } from "@mui/material";
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { useDrawerContext } from '../shared/contexts';
+import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
 
 export const AppRoutes = () => {
-    const { toggleDrawerOpen } = useDrawerContext();    
+    const { toggleDrawerOpen, setDrawerOptions } = useDrawerContext();    
+
+    useEnhancedEffect(() => {
+        setDrawerOptions([
+            {
+                icon: 'home',
+                path: '/pagina-inicial',
+                label: 'Página-inicial',
+            },
+        ]);
+    }, []);
 
     return (
         <Routes>
